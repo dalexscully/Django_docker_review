@@ -24,7 +24,8 @@ SECRET_KEY = 'django-insecure-k$nt%fmj69l_$x*so&ew6)h=18g03)v_5bbg0jwg@c2d!%baw0
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# When DEBUG is True and ALLOWED_HOSTS is empty, the host is
+# validated against ['.localhost', '127.0.0.1', '[::1]'].
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,6 +89,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "postgres",
+#         "USER": "postgres",
+#         "PASSWORD": "postgres",
+#         "HOST": "db",
+#         "PORT": 5432,
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -134,5 +146,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    # NEW!
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
+
+STATIC_ROOT = BASE_DIR / "staticfiles"

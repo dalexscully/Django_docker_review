@@ -7,7 +7,8 @@ from .models import Thing
 
 
 class ThingTests(APITestCase):
-    # In Python, the @classmethod decorator is used to declare a method in the class as a class method that can be called using ClassName.MethodName()
+    # In Python, the @classmethod decorator is used to declare a method in the class as a class method that can be
+    # called using ClassName.MethodName()
     # click the blue circle, this overrides a particular method
     @classmethod
     def setUpTestData(cls):
@@ -89,4 +90,3 @@ class ThingTests(APITestCase):
         url = reverse("thing_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        
